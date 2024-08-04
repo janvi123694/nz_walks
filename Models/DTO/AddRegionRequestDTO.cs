@@ -1,6 +1,6 @@
 namespace nz_walks.Models.DTO;
 
-public class AddRegionRequest
+public class AddRegionRequestDTO
 {
     public string Code { get; set; }
 
