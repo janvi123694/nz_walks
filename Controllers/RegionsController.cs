@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using nz_walks.CustomActionFilters;
 using nz_walks.Models.DTO;
 using nz_walks.Repositories;
 using NZWalks.Data;
@@ -47,8 +48,10 @@ namespace nz_walks.Controllers
         }
 
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> create([FromBody] AddRegionRequestDTO addRegionRequestDto)
         {
+           
             var regionDomainModel = _mapper.Map<Region>(addRegionRequestDto); 
 
             regionDomainModel = await regionRepository.CreateAsync(regionDomainModel); 
@@ -56,13 +59,14 @@ namespace nz_walks.Controllers
             var newRegionDTO = _mapper.Map<RegionDTO>(regionDomainModel); 
             return CreatedAtAction(nameof(getById),
                 new { id = regionDomainModel.Id }, newRegionDTO
-                ); 
+            ); 
 
         }
         
         
         [HttpPut]
         [Route("{id:Guid}")]
+        [ValidateModel]
         public  async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             var regionDomainModel = _mapper.Map<Region>(updateRegionRequestDto); 
@@ -72,8 +76,8 @@ namespace nz_walks.Controllers
                 return NotFound(); 
             }
 
-            var regionDto = _mapper.Map<RegionDTO>(regionDomainModel); 
-            return Ok(regionDto);
+            var regionDto = _mapper.Map<RegionDTO>(regionDomainModel);
+            return Ok(regionDto); 
         }
         
         [HttpDelete]
