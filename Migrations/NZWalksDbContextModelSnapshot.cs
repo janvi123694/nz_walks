@@ -54,6 +54,35 @@ namespace nz_walks.Migrations
                         });
                 });
 
+            modelBuilder.Entity("NZWalks.Models.Domain.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FileDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileExtension")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("FileSizeInBytes")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
+                });
+
             modelBuilder.Entity("NZWalks.Models.Domain.Region", b =>
                 {
                     b.Property<Guid>("Id")
